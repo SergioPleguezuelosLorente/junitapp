@@ -34,7 +34,12 @@ class CuentaTest {
         assertEquals(cuenta, cuenta2);
     }
 
+    @Test
+    void testReferenciaCuenta2() {
+        Cuenta cuenta = new Cuenta("Andres", new BigDecimal(123.2134));
+        Cuenta cuenta2 = new Cuenta("Andres", new BigDecimal(123.2134));
 
-    //asdasdakdjasdlashj
+        assertEquals(cuenta, cuenta2);
+    }
 
 }
