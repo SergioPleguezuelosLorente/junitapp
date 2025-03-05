@@ -1,5 +1,7 @@
 package org.sergio.junit5app.ejercicio.models;
 
+import org.sergio.junit5app.ejercicio.exceptions.DineroInsuficienteException;
+
 import java.math.BigDecimal;
 
 public class Cuenta {
@@ -29,7 +31,11 @@ public class Cuenta {
 
 
     public void debito(BigDecimal cantidad) {
-        this.saldo = this.saldo.subtract(cantidad);
+        BigDecimal nuevoSaldo = this.saldo.subtract(cantidad);
+        if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
+            throw new DineroInsuficienteException("Dinero Insuficiente");
+        }
+        this.saldo = nuevoSaldo;
     }
 
     public void credito(BigDecimal cantidad) {

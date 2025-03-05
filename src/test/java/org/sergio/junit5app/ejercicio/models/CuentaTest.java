@@ -1,6 +1,7 @@
 package org.sergio.junit5app.ejercicio.models;
 
 import org.junit.jupiter.api.Test;
+import org.sergio.junit5app.ejercicio.exceptions.DineroInsuficienteException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,4 +57,14 @@ class CuentaTest {
         assertEquals("30.14", cuenta.getSaldo().toPlainString());
     }
 
+    @Test
+    void testDineroInsuficienteException() {
+        Cuenta cuenta = new Cuenta("Andres", new BigDecimal("2"));
+        Exception exception = assertThrows(DineroInsuficienteException.class, ()-> {
+            cuenta.debito(new BigDecimal(1500));
+        });
+        String real = exception.getMessage();
+        String esperado = "Dinero Insuficiente";
+        assertEquals(esperado, real);
+    }
 }
