@@ -28,6 +28,14 @@ public class Cuenta {
     }
 
 
+    public void debito(BigDecimal cantidad) {
+        this.saldo = this.saldo.subtract(cantidad);
+    }
+
+    public void credito(BigDecimal cantidad) {
+        this.saldo = this.saldo.add(cantidad);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Cuenta)){
