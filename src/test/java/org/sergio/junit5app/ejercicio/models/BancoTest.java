@@ -29,19 +29,25 @@ public class BancoTest {
         banco.addCuenta(juan);
         banco.addCuenta(andres);
         banco.setNombre("Banco de espania");
+        banco.transferir(andres, juan, new BigDecimal(500));
 
-        assertEquals(2, banco.getCuentas().size());
-        assertEquals("Banco de espania", juan.getBanco().getNombre());
-        assertEquals("Andres Roberto", banco.getCuentas().stream()
-                .filter(c -> c.getPersona().equals("Andres Roberto"))
-                .findFirst().
-                get().getPersona());
+        assertAll(() -> assertEquals("252", juan.getSaldo().toPlainString())
+        , () -> assertEquals("20", andres.getSaldo().toPlainString())
+        , () -> assertEquals(3, banco.getCuentas().size())
+        , () -> assertEquals("Banco de espania.", juan.getBanco().getNombre())
+        , () -> {
+            assertEquals("Andres Roberto.", banco.getCuentas().stream()
+                    .filter(c -> c.getPersona().equals("Andres Roberto"))
+                    .findFirst().
+                    get().getPersona());
+        }, () -> {
+            assertTrue(banco.getCuentas().stream()
+                    .anyMatch(c -> c.getPersona().equals("Juan Antonio.")));
+        }, () -> {
+            assertFalse(banco.getCuentas().stream()
+                    .anyMatch(c -> c.getPersona().equals("Juan Rodrigo.")));
+        });
 
-        assertTrue(banco.getCuentas().stream()
-                .anyMatch(c -> c.getPersona().equals("Juan Antonio")));
-
-        assertFalse(banco.getCuentas().stream()
-                .anyMatch(c -> c.getPersona().equals("Juan Rodrigo")));
 
     }
 }
