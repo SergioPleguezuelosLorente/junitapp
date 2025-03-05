@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class Cuenta {
     private String persona;
     private BigDecimal saldo;
+    private Banco banco;
 
     public Cuenta(String persona, BigDecimal saldo) {
         this.persona = persona;
@@ -29,10 +30,17 @@ public class Cuenta {
         this.saldo = saldo;
     }
 
+    public Banco getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Banco banco) {
+        this.banco = banco;
+    }
 
     public void debito(BigDecimal cantidad) {
         BigDecimal nuevoSaldo = this.saldo.subtract(cantidad);
-        if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
+        if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0) {
             throw new DineroInsuficienteException("Dinero Insuficiente");
         }
         this.saldo = nuevoSaldo;
@@ -44,7 +52,7 @@ public class Cuenta {
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Cuenta)){
+        if (!(obj instanceof Cuenta)) {
             return false;
         }
         Cuenta c = (Cuenta) obj;
